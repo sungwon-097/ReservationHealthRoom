@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {List} from "./App";
 
 const ServerTimeComponent = () => {
     const [serverTime, setServerTime] = useState(new Date());
@@ -14,7 +15,7 @@ const ServerTimeComponent = () => {
     }, []);
 
     return (
-        <div>{serverTime.toLocaleString()}</div>
+        <List>{serverTime.toLocaleString()}</List>
     );
 };
 
