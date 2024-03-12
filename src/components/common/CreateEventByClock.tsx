@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 export function CreateEventByClock(props: any) {
-  const [isToggleOn, setIsToggleOn] = useState(false);
+  const [isToggleOn, setIsToggleOn] = useState<boolean>(false);
 
   const handleToggle = () => {
     setIsToggleOn(!isToggleOn);

@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+export const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Title = styled.h3``;
 
 export const Container = styled.div`
@@ -35,7 +41,6 @@ export const Button = styled.button`
 `;
 
 export const List = styled.div`
-  margin: auto;
   padding: 1rem;
   justify-content: center;
 `;

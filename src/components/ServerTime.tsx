@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { List } from "./App.styles";
+import { List } from "../App.styles";
 
 const ServerTimeComponent = () => {
   const [serverTime, setServerTime] = useState(new Date());

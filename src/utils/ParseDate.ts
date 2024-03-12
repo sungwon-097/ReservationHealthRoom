@@ -1,4 +1,4 @@
-export const parseDate = (date:any) => {
+export const parseDate = (date: any) => {
   return date
     .toLocaleDateString("ko-KR", {
       year: "numeric",

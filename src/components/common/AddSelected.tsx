@@ -1,4 +1,4 @@
-import { Button, List } from "../App.styles";
+import { Button, List } from "../../App.styles";
 import React from "react";
 
 export const AddSelected = (props: any) => {
