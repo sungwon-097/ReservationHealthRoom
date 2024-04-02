@@ -14,7 +14,7 @@ const ServerTimeComponent = () => {
     };
   }, []);
 
-  return <List>{serverTime.toLocaleString()}</List>;
+  return <List style={{fontSize:"20px"}}>{serverTime.toLocaleString()}</List>;
 };
 
 export default ServerTimeComponent;
