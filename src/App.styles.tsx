@@ -21,7 +21,7 @@ export const Container = styled.div`
 
 export const TitleLogoImage = styled.img`
   width: 8rem;
-  margin-bottom: 1rem;
+  margin: auto 0;
 `;
 
 export const Field = styled.div``;
