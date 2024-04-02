@@ -5,7 +5,12 @@ import { PreWork } from "./components/PreWork";
 import { MakeReservationList } from "./components/MakeReservationList";
 import { Reservation } from "./components/Reservation";
 import { ReservationHistory } from "./components/ReservationHistory";
-import { Header } from "./components/Header";
+import { Header } from "./components/common/Header";
+// import { BoxContainer } from "./components/common/BoxContainer";
+import { TimsLogin } from "./components/timsLogin/TimsLogin";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { EmployeeNumField } from "./components/employeeNumField/EmployeeNumField";
+import { AppRoutes } from "./routes/AppRoutes";
 
 function App() {
   /**
@@ -17,10 +22,11 @@ function App() {
   return (
     <>
       <Header reservationList={reservationList} />
-      <PreWork />
+      {/* <PreWork />
       <MakeReservationList setReservationList={setReservationList} />
       <Reservation reservationList={reservationList} />
-      <ReservationHistory />
+      <ReservationHistory /> */}
+      <AppRoutes/>
     </>
   );
 }
