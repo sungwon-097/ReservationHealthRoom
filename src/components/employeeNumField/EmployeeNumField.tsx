@@ -1,16 +1,25 @@
 import React from "react";
 import { BoxContainer } from "../common/BoxContainer";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export const EmployeeNumField = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const filteredValue = value.replace(/[^0-9]/g, '');
+    e.target.value = filteredValue;
+  };
+
   const onEmpSubmit = (data: any) => {
-    console.log(data);
+    // console.log(data);
+    navigate(`/reservation/${data.employeeNumber}`)
   };
 
   return (
@@ -50,6 +59,7 @@ export const EmployeeNumField = () => {
               backgroundColor: "#e8f0fe",
               padding: "0px 0px 0px 4px",
             }}
+            onChange={handleInputChange}
             placeholder="사원 번호 입력"
           />
           {errors.employeeNumber ? (
