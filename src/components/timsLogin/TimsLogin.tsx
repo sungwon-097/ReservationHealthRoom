@@ -4,13 +4,12 @@ import { constURL } from "../../utils/ConstURL";
 import { useNavigate } from "react-router-dom";
 
 export const TimsLogin = () => {
-
   const navigate = useNavigate();
 
   const onClickLogin = () => {
-    window.open(constURL.timsUrl, '_blank');
+    window.open(constURL.timsUrl, "_blank");
     navigate("/employee-auth");
-  }
+  };
 
   return (
     <BoxContainer
