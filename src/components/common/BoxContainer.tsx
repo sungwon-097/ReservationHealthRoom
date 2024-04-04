@@ -7,16 +7,16 @@ interface BoxConatainerProps {
 
 export const BoxContainer = ({ title, content }: BoxConatainerProps) => {
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "calc(100vh - 59px)",
-        backgroundColor: "#f5f5f5",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    // <div
+    //   style={{
+    //     width: "100vw",
+    //     height: "calc(100vh - 59px)",
+    //     backgroundColor: "#f5f5f5",
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //   }}
+    // >
       <div
         style={{
           backgroundColor: "white",
@@ -32,6 +32,6 @@ export const BoxContainer = ({ title, content }: BoxConatainerProps) => {
         <h1>{title}</h1>
         {content}
       </div>
-    </div>
+    // </div>
   );
 };

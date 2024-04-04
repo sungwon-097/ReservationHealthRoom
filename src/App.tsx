@@ -22,11 +22,22 @@ function App() {
   return (
     <>
       <Header reservationList={reservationList} />
-      {/* <PreWork />
+      <div
+        style={{
+          width: "100%",
+          height: "calc(100vh - 59px)",
+          backgroundColor: "#f5f5f5",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {/* <PreWork />
       <MakeReservationList setReservationList={setReservationList} />
       <Reservation reservationList={reservationList} />
       <ReservationHistory /> */}
-      <AppRoutes/>
+        <AppRoutes />
+      </div>
     </>
   );
 }
