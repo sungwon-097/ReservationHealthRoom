@@ -1,5 +1,5 @@
 export const timeInfo = [
-  { value: null, name: "선택" },
+  { value: null, name: "시간 선택" },
   { value: "12", name: "12:00 ~ 12:50" },
   { value: "13", name: "13:00 ~ 13:50" },
   { value: "14", name: "14:00 ~ 14:50" },

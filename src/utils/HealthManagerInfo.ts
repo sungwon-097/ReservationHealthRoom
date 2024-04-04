@@ -1,5 +1,5 @@
 export const healthManagerInfo = [
-  { value: null, name: "선택" },
+  { value: null, name: "관리사 선택" },
   { value: "HEL20231128001", name: "1. 유 정(여/미금)" },
   { value: "HEL20140101130", name: "2. 이승우(남/미금)" },
   { value: "HEL20210330001", name: "3. 정영민(남/미금)" },
