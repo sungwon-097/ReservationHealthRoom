@@ -1,87 +1,122 @@
-import React from "react";
-import { BoxContainer } from "../../common/BoxContainer";
+import React, { useState } from "react";
+import { BoxContainer } from "../../common/boxContainer/BoxContainer";
 import { SelectBox } from "../../common/SelectBox";
 import { healthManagerInfo } from "../../../utils/HealthManagerInfo";
 import { timeInfo } from "../../../utils/TimeInfo";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
-import styled from "styled-components";
+import { Controller, useForm } from "react-hook-form";
+import { Button } from "../../common/button/Button.styles";
+import * as S from "./MakeReservation.styles";
+import { parseDate } from "../../../utils/ParseDate";
 
-const CustomDatePicker = styled(DatePicker)`
-  padding: 0;
-  width: 298.19px;
-  height: 38.19px;
-  text-align: center;
-  border-radius: 10px;
-  font-size: 16px;
-  border: 1px solid gray;
-  font-weight: 500;
-`;
+//   const [params, setParams] = useState<any>({
+//     helMngerCd: null,
+//     useDate: null,
+//     useStTime: null,
+//     useEdTime: null,
+//     userDiv: 1,
+//     reqEmpNo: null,
+//   });
 
 export const MakeReservation = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
+
+  const [selectReservation, setSelectReservation] = useState<any>({
+    managerName: "",
+    helMngerCd: null,
+    useDate: null,
+    useStTime: null,
+    useEdTime: null,
+    userDiv: 1,
+    // reqEmpNo: null,
+  });
+
+  console.log("셀렉트 값", selectReservation);
+
+  const handleChangeHelMngerCd = (e: any) => {
+    const { name, value } = e.target;
+    const healthManager = healthManagerInfo?.findIndex(
+      (e) => e.value === value
+    );
+    setSelectReservation((prev: any) => ({
+      ...prev,
+      [name]: value,
+      managerName:
+        healthManager !== -1 ? healthManagerInfo[healthManager].name : "",
+    }));
+  };
+
+  const handleChangeUseStime = (e: any) => {
+    const { value } = e.target;
+    setSelectReservation((prev: any) => ({
+      ...prev,
+      useStTime: value.padEnd(5, ":00"),
+      useEdTime: value.padEnd(5, ":50"),
+    }));
+  };
+
+  const handleChangeReservationDate = (e: any) => {
+    setSelectReservation((prev: any) => ({
+      ...prev,
+      useDate: e !== null ? parseDate(e) : null,
+    }));
+  };
+
   return (
     <BoxContainer
-      title="3. 예약 목록 선택"
+      title="3. 예약 선택"
       content={
         <>
-          <div
-            style={{
-              marginTop: "40px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-            }}
-          >
-            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-              <span style={{ width: "60px", textAlign: "center" }}>관리사</span>
+          <S.SelectReservationWrapper>
+            <S.SelectItemWrapper>
+              <S.SelectItemTitle>관리사</S.SelectItemTitle>
               <SelectBox
+                {...register("helMngerCd")}
                 options={healthManagerInfo}
                 name="helMngerCd"
+                defaultValue={"관리사 선택"}
+                onChange={handleChangeHelMngerCd}
                 // onChange={handleChange}
               />
-            </div>
-            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-              <span style={{ width: "60px", textAlign: "center" }}>시간</span>
+            </S.SelectItemWrapper>
+            <S.DatePickerItemWrapper>
+              <S.DatePickerTitle>날짜</S.DatePickerTitle>
+              <Controller
+                control={control}
+                name="reservationDate"
+                render={({ field }) => (
+                  <S.CustomDatePicker
+                    placeholderText="날짜 선택"
+                    onChange={(date: any) => {
+                      handleChangeReservationDate(date);
+                      field.onChange(date);
+                    }}
+                    selected={field.value}
+                    dateFormat="yyyyMMdd"
+                  />
+                )}
+              />
+            </S.DatePickerItemWrapper>
+            <S.SelectItemWrapper>
+              <S.SelectItemTitle>시간</S.SelectItemTitle>
               <SelectBox
+                {...register("useStime")}
                 options={timeInfo}
                 name="useStTime"
-                // onChange={handleChangeTime}
+                onChange={handleChangeUseStime}
+                defaultValue={"시간 선택"}
               />
-            </div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <span
-                style={{
-                  width: "60px",
-                  textAlign: "center",
-                  marginRight: "10px",
-                }}
-              >
-                날짜
-              </span>
-              <CustomDatePicker
-                // selected={selectedDate}
-                // onChange={handleDateChange}
-                dateFormat="yyyyMMdd"
-                placeholderText="날짜 선택"
-              />
-            </div>
-          </div>
-          <button
-            style={{
-              width: "300px",
-              height: "50px",
-              borderRadius: "5px",
-              marginTop: "40px",
-              backgroundColor: "#666666",
-              color: "white",
-              fontFamily: "Noto Sans KR",
-              fontSize: "16px",
-              fontWeight: "700",
-            }}
-            // onClick={onClickLogin}
+            </S.SelectItemWrapper>
+          </S.SelectReservationWrapper>
+          <Button
+          // onClick={onClickLogin}
           >
             예약 목록 추가
-          </button>
+          </Button>
         </>
       }
     />
