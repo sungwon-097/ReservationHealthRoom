@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { List } from "../App.styles";
+import styled from "styled-components";
+
+const List = styled.div`
+  padding: 1rem;
+  justify-content: center;
+`;
 
 const ServerTimeComponent = () => {
   const [serverTime, setServerTime] = useState(new Date());

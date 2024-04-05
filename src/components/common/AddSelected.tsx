@@ -1,5 +1,11 @@
-import { Button, List } from "../../App.styles";
+import styled from "styled-components";
+import { Button } from "./button/Button.styles";
 import React from "react";
+
+export const List = styled.div`
+  padding: 1rem;
+  justify-content: center;
+`;
 
 export const AddSelected = (props: any) => {
   return (
