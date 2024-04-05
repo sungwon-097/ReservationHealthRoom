@@ -1,5 +1,7 @@
 import React from "react";
-import { BoxContainer } from "../../common/BoxContainer";
+import { BoxContainer } from "../../common/boxContainer/BoxContainer";
+import { Button } from "../../common/button/Button.styles";
+import * as S from "./ReservationDetail.styles";
 
 export const ReservationDetails = () => {
   const tableData = [
@@ -8,109 +10,93 @@ export const ReservationDetails = () => {
       time: "14:00 - 15:00",
       date: "2022-04-01",
     },
-    // {
-    //   manager: "김철수",
-    //   time: "15:00 - 16:00",
-    //   date: "2022-04-01",
-    // },
-    // {
-    //   manager: "김철수",
-    //   time: "15:00 - 16:00",
-    //   date: "2022-04-01",
-    // },
-    // {
-    //   manager: "김철수",
-    //   time: "15:00 - 16:00",
-    //   date: "2022-04-01",
-    // },
-    // {
-    //   manager: "김철수",
-    //   time: "15:00 - 16:00",
-    //   date: "2022-04-01",
-    // },
-    // {
-    //   manager: "김철수",
-    //   time: "15:00 - 16:00",
-    //   date: "2022-04-01",
-    // },
-    // {
-    //   manager: "김철수",
-    //   time: "15:00 - 16:00",
-    //   date: "2022-04-01",
-    // },
-    // 추가 데이터...
+    {
+      manager: "홍길동",
+      time: "14:00 - 15:00",
+      date: "2022-04-01",
+    },
+    {
+      manager: "홍길동",
+      time: "14:00 - 15:00",
+      date: "2022-04-01",
+    },
+    {
+      manager: "홍길동",
+      time: "14:00 - 15:00",
+      date: "2022-04-01",
+    },
+    {
+      manager: "홍길동",
+      time: "14:00 - 15:00",
+      date: "2022-04-01",
+    },
+    {
+      manager: "홍길동",
+      time: "14:00 - 15:00",
+      date: "2022-04-01",
+    },
+    {
+      manager: "홍길동",
+      time: "14:00 - 15:00",
+      date: "2022-04-01",
+    },
+    {
+      manager: "홍길동",
+      time: "14:00 - 15:00",
+      date: "2022-04-01",
+    },
   ];
+
   return (
     <BoxContainer
-      title="4. 예약 목록 확인 및 등록"
+      title="4. 예약 목록 및 등록"
       content={
         <>
-          <table
-            style={{
-              maxWidth: "100%",
-              height: "200px",
-              border: "1px solid black",
-              overflow: "hidden",
-              borderRadius: "4px",
-            }}
-          >
-            <thead>
-              <tr style={{ borderBottom: "1px solid black", display: "block" }}>
-                <th style={{ width: "30px" }}>#</th>
-                <th style={{ width: "90px" }}>관리사</th>
-                <th style={{ width: "120px" }}>시간</th>
-                <th style={{ width: "110px" }}>날짜</th>
-                <th style={{ width: "60px" }}>삭제</th>
-              </tr>
-            </thead>
-            <tbody
-              style={{
-                display: "block",
-                height: "160px",
-                overflowY: "auto",
-                textAlign: "center",
-              }}
-            >
+          <S.ReservationListTable>
+            <S.ReservationListHead>
+              <S.ReservationListHeadTr>
+                <S.ReservationListHeadTh width={30}>#</S.ReservationListHeadTh>
+                <S.ReservationListHeadTh width={90}>
+                  관리사
+                </S.ReservationListHeadTh>
+                <S.ReservationListHeadTh width={120}>
+                  시간
+                </S.ReservationListHeadTh>
+                <S.ReservationListHeadTh width={110}>
+                  날짜
+                </S.ReservationListHeadTh>
+                <S.ReservationListHeadTh width={60}>
+                  삭제
+                </S.ReservationListHeadTh>
+              </S.ReservationListHeadTr>
+            </S.ReservationListHead>
+            <S.ReservationListBody>
               {tableData.map((row, index) => (
-                <tr
-                  key={index}
-                  style={{
-                    height: "40px",
-                    display: "table",
-                    tableLayout: "fixed",
-                    width: "100%",
-                    fontSize: "14px",
-                  }}
-                >
-                  <td style={{ width: "30px", padding: "0" }}>
+                <S.ReservationListBodyTr key={index}>
+                  <S.ReservationListBodyTd width={30}>
                     {index + 1 + "."}
-                  </td>
-                  <td style={{ width: "90px", padding: "0" }}>{row.manager}</td>
-                  <td style={{ width: "120px", padding: "0" }}>{row.time}</td>
-                  <td style={{ width: "110px", padding: "0" }}>{row.date}</td>
-                  <td style={{ width: "60px", padding: "0" }}>
+                  </S.ReservationListBodyTd>
+                  <S.ReservationListBodyTd width={90}>
+                    {row.manager}
+                  </S.ReservationListBodyTd>
+                  <S.ReservationListBodyTd width={120}>
+                    {row.time}
+                  </S.ReservationListBodyTd>
+                  <S.ReservationListBodyTd width={110}>
+                    {row.date}
+                  </S.ReservationListBodyTd>
+                  <S.ReservationListBodyTd width={60}>
                     <button>취소</button>
-                  </td>
-                </tr>
+                  </S.ReservationListBodyTd>
+                </S.ReservationListBodyTr>
               ))}
-            </tbody>
-          </table>
-          <button
-            style={{
-              width: "300px",
-              height: "50px",
-              borderRadius: "5px",
-              marginTop: "40px",
-              backgroundColor: "#666666",
-              color: "white",
-              fontFamily: "Noto Sans KR",
-              fontSize: "16px",
-              fontWeight: "700",
-            }}
-            // onClick={onClickLogin}
+            </S.ReservationListBody>
+          </S.ReservationListTable>
+          <Button
+          // onClick={onClickLogin}
           >
             예약 등록
-          </button>
+          </Button>
         </>
       }
     />
