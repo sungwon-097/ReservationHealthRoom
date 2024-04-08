@@ -2,50 +2,14 @@ import React from "react";
 import { BoxContainer } from "../../common/boxContainer/BoxContainer";
 import { Button } from "../../common/button/Button.styles";
 import * as S from "./ReservationDetail.styles";
+import useReservationStore from "../../../store/stroe";
 
 export const ReservationDetails = () => {
-  const tableData = [
-    {
-      manager: "홍길동",
-      time: "14:00 - 15:00",
-      date: "2022-04-01",
-    },
-    {
-      manager: "홍길동",
-      time: "14:00 - 15:00",
-      date: "2022-04-01",
-    },
-    {
-      manager: "홍길동",
-      time: "14:00 - 15:00",
-      date: "2022-04-01",
-    },
-    {
-      manager: "홍길동",
-      time: "14:00 - 15:00",
-      date: "2022-04-01",
-    },
-    {
-      manager: "홍길동",
-      time: "14:00 - 15:00",
-      date: "2022-04-01",
-    },
-    {
-      manager: "홍길동",
-      time: "14:00 - 15:00",
-      date: "2022-04-01",
-    },
-    {
-      manager: "홍길동",
-      time: "14:00 - 15:00",
-      date: "2022-04-01",
-    },
-    {
-      manager: "홍길동",
-      time: "14:00 - 15:00",
-      date: "2022-04-01",
-    },
-  ];
+  const { reservationList, deleteReservationItem } = useReservationStore();
+
+  const handleDeleteItem = (id: any) => {
+    deleteReservationItem(id);
+  };
 
   return (
     <BoxContainer
@@ -56,8 +20,8 @@ export const ReservationDetails = () => {
             <S.ReservationListHead>
               <S.ReservationListHeadTr>
                 <S.ReservationListHeadTh width={30}>#</S.ReservationListHeadTh>
-                <S.ReservationListHeadTh width={90}>
-                  관리사
+                <S.ReservationListHeadTh width={140}>
+                  관리사(장소)
                 </S.ReservationListHeadTh>
                 <S.ReservationListHeadTh width={120}>
                   시간
@@ -71,22 +35,24 @@ export const ReservationDetails = () => {
               </S.ReservationListHeadTr>
             </S.ReservationListHead>
             <S.ReservationListBody>
-              {tableData.map((row, index) => (
+              {reservationList.map((row, index) => (
                 <S.ReservationListBodyTr key={index}>
                   <S.ReservationListBodyTd width={30}>
                     {index + 1 + "."}
                   </S.ReservationListBodyTd>
-                  <S.ReservationListBodyTd width={90}>
-                    {row.manager}
+                  <S.ReservationListBodyTd width={140}>
+                    {row.managerName?.slice(3)}
                   </S.ReservationListBodyTd>
                   <S.ReservationListBodyTd width={120}>
-                    {row.time}
+                    {`${row.useStTime} ~ ${row.useEdTime}`}
                   </S.ReservationListBodyTd>
                   <S.ReservationListBodyTd width={110}>
-                    {row.date}
+                    {row.useDate}
                   </S.ReservationListBodyTd>
                   <S.ReservationListBodyTd width={60}>
-                    <button>취소</button>
+                    <button onClick={() => handleDeleteItem(row.id)}>
+                      취소
+                    </button>
                   </S.ReservationListBodyTd>
                 </S.ReservationListBodyTr>
               ))}
