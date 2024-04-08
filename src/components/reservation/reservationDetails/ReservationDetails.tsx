@@ -3,12 +3,29 @@ import { BoxContainer } from "../../common/boxContainer/BoxContainer";
 import { Button } from "../../common/button/Button.styles";
 import * as S from "./ReservationDetail.styles";
 import useReservationStore from "../../../store/stroe";
+import { constURL } from "../../../utils/ConstURL";
+import { onSubmit } from "../../../utils/onSubmit";
+import { ReservationListItemProps } from "../../../declare/type";
 
 export const ReservationDetails = () => {
   const { reservationList, deleteReservationItem } = useReservationStore();
 
   const handleDeleteItem = (id: any) => {
     deleteReservationItem(id);
+  };
+
+  const handleRegistHealthCare = () => {
+    const registLink = reservationList.map(
+      (e: ReservationListItemProps) =>
+        `${constURL.reservationUrl}helMngerCd=${
+          e.helMngerCd
+        }&useDate=${e.useDate?.split("-").join("")}&useStTime=${e.useStTime
+          ?.split(":")
+          .join("")}&useEdTime=${e.useEdTime
+          ?.split(":")
+          .join("")}&userDiv=0001&reqEmpNo=${e.reqEmpNo}`
+    );
+    if (registLink.length > 0) onSubmit(registLink);
   };
 
   return (
@@ -58,11 +75,7 @@ export const ReservationDetails = () => {
               ))}
             </S.ReservationListBody>
           </S.ReservationListTable>
-          <Button
-          // onClick={onClickLogin}
-          >
-            예약 등록
-          </Button>
+          <Button onClick={handleRegistHealthCare}>예약 등록</Button>
         </>
       }
     />
