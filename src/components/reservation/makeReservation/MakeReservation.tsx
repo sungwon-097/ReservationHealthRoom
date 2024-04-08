@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { BoxContainer } from "../../common/boxContainer/BoxContainer";
-import { SelectBox } from "../../common/SelectBox";
+import { SelectBox } from "../../common/selectBox/SelectBox";
 import { healthManagerInfo } from "../../../utils/HealthManagerInfo";
 import { timeInfo } from "../../../utils/TimeInfo";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "../../common/button/Button.styles";
 import * as S from "./MakeReservation.styles";
 import { parseDate } from "../../../utils/ParseDate";
+import useReservationStore from "../../../store/stroe";
+import { useParams } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 //   const [params, setParams] = useState<any>({
 //     helMngerCd: null,
@@ -18,69 +21,84 @@ import { parseDate } from "../../../utils/ParseDate";
 //   });
 
 export const MakeReservation = () => {
+  const { userId } = useParams();
+  const { reservationList, addReservationList } = useReservationStore();
+  const [managerName, setManagerName] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm();
-
-  const [selectReservation, setSelectReservation] = useState<any>({
-    managerName: "",
-    helMngerCd: null,
-    useDate: null,
-    useStTime: null,
-    useEdTime: null,
-    userDiv: 1,
-    // reqEmpNo: null,
+    setValue,
+    reset,
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      helMngerCd: "관리사 선택",
+      useStime: "시간 선택",
+      reservationDate: null,
+    },
   });
 
-  console.log("셀렉트 값", selectReservation);
+  console.log("예약 확인", reservationList);
+
+  const onAddReserveList = (formData: any) => {
+    addReservationList([
+      {
+        id: uuidv4(),
+        managerName: managerName,
+        helMngerCd: formData?.helMngerCd,
+        useDate: parseDate(formData?.reservationDate),
+        useStTime: formData?.useStime.padEnd(5, ":00"),
+        useEdTime: formData?.useStime.padEnd(5, ":50"),
+        userDiv: 1,
+        reqEmpNo: userId,
+      },
+    ]);
+    reset();
+  };
 
   const handleChangeHelMngerCd = (e: any) => {
     const { name, value } = e.target;
     const healthManager = healthManagerInfo?.findIndex(
       (e) => e.value === value
     );
-    setSelectReservation((prev: any) => ({
-      ...prev,
-      [name]: value,
-      managerName:
-        healthManager !== -1 ? healthManagerInfo[healthManager].name : "",
-    }));
+
+    setValue(name, value, { shouldValidate: true });
+    setManagerName(
+      healthManager !== -1 && value !== "관리사 선택"
+        ? healthManagerInfo[healthManager].name
+        : null
+    );
   };
 
   const handleChangeUseStime = (e: any) => {
     const { value } = e.target;
-    setSelectReservation((prev: any) => ({
-      ...prev,
-      useStTime: value.padEnd(5, ":00"),
-      useEdTime: value.padEnd(5, ":50"),
-    }));
+    setValue("useStime", value, { shouldValidate: true });
   };
 
   const handleChangeReservationDate = (e: any) => {
-    setSelectReservation((prev: any) => ({
-      ...prev,
-      useDate: e !== null ? parseDate(e) : null,
-    }));
+    setValue("reservationDate", e, { shouldValidate: true });
   };
 
   return (
     <BoxContainer
       title="3. 예약 선택"
       content={
-        <>
+        <S.SelectReservationForm onSubmit={handleSubmit(onAddReserveList)}>
           <S.SelectReservationWrapper>
             <S.SelectItemWrapper>
               <S.SelectItemTitle>관리사</S.SelectItemTitle>
               <SelectBox
-                {...register("helMngerCd")}
+                {...register("helMngerCd", {
+                  validate: (value) =>
+                    value !== "관리사 선택" || "관리사를 선택해주세요.",
+                })}
                 options={healthManagerInfo}
                 name="helMngerCd"
-                defaultValue={"관리사 선택"}
                 onChange={handleChangeHelMngerCd}
-                // onChange={handleChange}
+                error={errors.helMngerCd}
               />
             </S.SelectItemWrapper>
             <S.DatePickerItemWrapper>
@@ -88,15 +106,19 @@ export const MakeReservation = () => {
               <Controller
                 control={control}
                 name="reservationDate"
+                rules={{
+                  validate: (value) => value || "날짜를 선택해주세요.",
+                }}
                 render={({ field }) => (
                   <S.CustomDatePicker
                     placeholderText="날짜 선택"
-                    onChange={(date: any) => {
+                    onChange={(date: Date) => {
                       handleChangeReservationDate(date);
                       field.onChange(date);
                     }}
                     selected={field.value}
-                    dateFormat="yyyyMMdd"
+                    dateFormat="yyyy-MM-dd"
+                    error={errors?.reservationDate}
                   />
                 )}
               />
@@ -104,20 +126,19 @@ export const MakeReservation = () => {
             <S.SelectItemWrapper>
               <S.SelectItemTitle>시간</S.SelectItemTitle>
               <SelectBox
-                {...register("useStime")}
+                {...register("useStime", {
+                  validate: (value) =>
+                    value !== "시간 선택" || "시간을 선택해주세요.",
+                })}
                 options={timeInfo}
                 name="useStTime"
                 onChange={handleChangeUseStime}
-                defaultValue={"시간 선택"}
+                error={errors?.useStime}
               />
             </S.SelectItemWrapper>
           </S.SelectReservationWrapper>
-          <Button
-          // onClick={onClickLogin}
-          >
-            예약 목록 추가
-          </Button>
-        </>
+          <Button type="submit">예약 목록 추가</Button>
+        </S.SelectReservationForm>
       }
     />
   );
