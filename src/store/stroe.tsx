@@ -1,12 +1,18 @@
 import create from "zustand";
-import { persist } from "zustand/middleware";
+import { ReservationListItemProps, ReservationState } from "../declare/type";
 
-const useReservationStore = create((set) => ({
-  empNum: "",
+const useReservationStore = create<ReservationState>((set) => ({
   reservationList: [],
-  setEmpNum: (newEmpNum: string) => set((state: string) => newEmpNum),
-  setReservationList: (newParams: any) =>
-    set((state: any) => ({ params: { ...state.params, ...newParams } })),
+  addReservationList: (newItems: ReservationListItemProps[]) =>
+    set((state) => ({
+      reservationList: [...state.reservationList, ...newItems],
+    })),
+  deleteReservationItem: (itemId: any) =>
+    set((state) => ({
+      reservationList: state.reservationList.filter(
+        (item) => item.id !== itemId
+      ),
+    })),
 }));
 
 export default useReservationStore;
