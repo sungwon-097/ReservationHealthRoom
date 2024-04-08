@@ -1,23 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { MakeReservation } from "./makeReservation/MakeReservation";
 import { ReservationDetails } from "./reservationDetails/ReservationDetails";
+import { ReservationWrapper } from "./Rservation.styles";
 
 function Reservation() {
-
-  const [params, setParams] = useState<any>({
-    helMngerCd: null,
-    useDate: null,
-    useStTime: null,
-    useEdTime: null,
-    userDiv: 1,
-    reqEmpNo: null,
-  });
-
   return (
-    <div style={{display: "flex", flexDirection:"row", gap:"50px"}}>
+    <ReservationWrapper>
       <MakeReservation />
       <ReservationDetails />
-    </div>
+    </ReservationWrapper>
   );
 }
 
