@@ -9,16 +9,8 @@ import * as S from "./MakeReservation.styles";
 import { parseDate } from "../../../utils/ParseDate";
 import useReservationStore from "../../../store/stroe";
 import { useParams } from "react-router-dom";
-import { v4 as uuidv4 } from 'uuid';
-
-//   const [params, setParams] = useState<any>({
-//     helMngerCd: null,
-//     useDate: null,
-//     useStTime: null,
-//     useEdTime: null,
-//     userDiv: 1,
-//     reqEmpNo: null,
-//   });
+import { v4 as uuidv4 } from "uuid";
+import { ReservationListItemProps } from "../../../declare/type";
 
 export const MakeReservation = () => {
   const { userId } = useParams();
@@ -41,21 +33,30 @@ export const MakeReservation = () => {
     },
   });
 
-  console.log("예약 확인", reservationList);
-
   const onAddReserveList = (formData: any) => {
-    addReservationList([
-      {
-        id: uuidv4(),
-        managerName: managerName,
-        helMngerCd: formData?.helMngerCd,
-        useDate: parseDate(formData?.reservationDate),
-        useStTime: formData?.useStime.padEnd(5, ":00"),
-        useEdTime: formData?.useStime.padEnd(5, ":50"),
-        userDiv: 1,
-        reqEmpNo: userId,
-      },
-    ]);
+    const reserveItem = {
+      id: uuidv4(),
+      managerName: managerName,
+      helMngerCd: formData?.helMngerCd,
+      useDate: parseDate(formData?.reservationDate),
+      useStTime: formData?.useStime.padEnd(5, ":00"),
+      useEdTime: formData?.useStime.padEnd(5, ":50"),
+      userDiv: 1,
+      reqEmpNo: userId,
+    };
+
+    const exists = reservationList.some(
+      (item: ReservationListItemProps) =>
+        item.managerName === reserveItem.managerName &&
+        item.helMngerCd === reserveItem.helMngerCd &&
+        item.useDate === reserveItem.useDate &&
+        item.useStTime === reserveItem.useStTime &&
+        item.useEdTime === reserveItem.useEdTime &&
+        item.userDiv === reserveItem.userDiv &&
+        item.reqEmpNo === reserveItem.reqEmpNo
+    );
+
+    if (!exists) addReservationList([reserveItem]);
     reset();
   };
 
