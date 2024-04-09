@@ -20,7 +20,6 @@ export const EmployeeNumField = () => {
   };
 
   const onEmpSubmit = (data: any) => {
-    // console.log(data);
     navigate(`/reservation/${data.employeeNumber}`);
   };
 

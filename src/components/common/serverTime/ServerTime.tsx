@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-
-const List = styled.div`
-  padding: 1rem;
-  justify-content: center;
-`;
+import { Clock } from "./ServerTime.styles";
 
 const ServerTimeComponent = () => {
   const [serverTime, setServerTime] = useState(new Date());
@@ -19,7 +14,7 @@ const ServerTimeComponent = () => {
     };
   }, []);
 
-  return <List style={{fontSize:"20px"}}>{serverTime.toLocaleString()}</List>;
+  return <Clock>{serverTime.toLocaleString()}</Clock>;
 };
 
 export default ServerTimeComponent;

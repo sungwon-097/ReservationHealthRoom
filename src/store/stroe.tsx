@@ -7,7 +7,7 @@ const useReservationStore = create<ReservationState>((set) => ({
     set((state) => ({
       reservationList: [...state.reservationList, ...newItems],
     })),
-  deleteReservationItem: (itemId: any) =>
+  deleteReservationItem: (itemId: string) =>
     set((state) => ({
       reservationList: state.reservationList.filter(
         (item) => item.id !== itemId
